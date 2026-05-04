@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANDREW COOLNESS SYSTEM // ULTRA FINAL</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+  color: #00ffcc;
+  font-family: monospace;
+}
+
+/* STARFIELD */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* UI */
+.ui {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  color: #ff00ff;
+  text-shadow: 0 0 15px #00ffcc, 0 0 30px #ff00ff;
+}
+
+/* PANEL */
+.panel {
+  margin: 15px auto;
+  max-width: 700px;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #00ffcc;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* BAR */
+.bar {
+  height: 20px;
+  background: #111;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#00ffcc,#ff00ff);
+  transition: 0.3s;
+}
+
+/* BUTTON */
+button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #00ffcc;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #00ffaa;
+}
+
+/* LOG */
+#log {
+  height: 120px;
+  overflow-y: auto;
+  text-align: left;
+  font-size: 12px;
+  background: black;
+  padding: 10px;
+  border: 1px solid #00ffcc;
+}
+
+/* FLASH */
+@keyframes flash {
+  0% {filter: brightness(1);}
+  50% {filter: brightness(2);}
+  100% {filter: brightness(1);}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="ui">
+  <div class="title">🔥 ANDREW COOLNESS SYSTEM // MAX 3000 🔥</div>
+
+  <div class="panel">
+    <h2>⚡ COOLNESS LEVEL</h2>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <h2 id="score">0</h2>
+    <button onclick="boost()">BOOST COOLNESS</button>
+  </div>
+
+  <div class="panel">
+    <h2>🧠 AI CORE</h2>
+    <p id="ai">SYSTEM ONLINE...</p>
+    <button onclick="ai()">QUERY CORE</button>
+  </div>
+
+  <div class="panel">
+    <h2>📡 SYSTEM LOG</h2>
+    <div id="log"></div>
+  </div>
+</div>
+
+<script>
+const MAX = 3000;
+let score = 0;
+let maxReached = false;
+
+/* LOG */
+function log(msg){
+  const l = document.getElementById("log");
+  l.innerHTML += ">> " + msg + "<br>";
+  l.scrollTop = l.scrollHeight;
+}
+
+/* UPDATE */
+function update(){
+  document.getElementById("score").innerText = score;
+  document.getElementById("fill").style.width = (score / MAX) * 100 + "%";
+}
+
+/* BOOST */
+function boost(){
+  let gain = Math.floor(Math.random()*100 + 40);
+  score += gain;
+
+  if(score >= MAX) score = MAX;
+
+  update();
+  log("Coolness +" + gain);
+
+  if(score >= MAX && !maxReached){
+    maxReached = true;
+    maxEvent();
+  }
+}
+
+/* AI */
+function ai(){
+  const msgs = [
+    "Andrew is beyond measurable limits.",
+    "Reality stability: COMPROMISED.",
+    "Entity status: LEGENDARY GODMODE.",
+    "Coolness field expanding globally.",
+    "SYSTEM VERDICT: UNSTOPPABLE"
+  ];
+  document.getElementById("ai").innerText =
+    msgs[Math.floor(Math.random()*msgs.length)];
+  log("AI CORE ACCESSED");
+}
+
+/* ========================= */
+/* ULTRA CELEBRATION SYSTEM */
+/* ========================= */
+
+function maxEvent(){
+  log("🎉 CONGRATS YOU HIT MAX COOLNESS (3000) 🎉");
+
+  document.body.style.animation = "flash 0.15s infinite";
+
+  screenShake();
+
+  // CONFETTI STORM (15 sec)
+  let confettiLoop = setInterval(() => {
+    for(let i = 0; i < 20; i++) spawnConfetti();
+  }, 200);
+
+  setTimeout(() => clearInterval(confettiLoop), 15000);
+
+  // FLOATING TEXT
+  for(let i = 0; i < 50; i++) floatingText();
+
+  // BIRDS
+  for(let i = 0; i < 30; i++) flyingBird();
+
+  // GALAXY BURST
+  galaxyBurst();
+
+  // BIG MESSAGE
+  let msg = document.createElement("div");
+  msg.innerHTML = "🌌🔥 MAX COOLNESS ASCENDED 🔥🌌";
+  msg.style.position = "fixed";
+  msg.style.top = "50%";
+  msg.style.left = "50%";
+  msg.style.transform = "translate(-50%,-50%)";
+  msg.style.fontSize = "42px";
+  msg.style.color = "#00ffcc";
+  msg.style.textShadow = "0 0 25px #ff00ff, 0 0 50px #00ffcc";
+  msg.style.zIndex = 9999;
+  document.body.appendChild(msg);
+
+  setTimeout(() => msg.remove(), 8000);
+}
+
+/* CONFETTI */
+function spawnConfetti(){
+  let c = document.createElement("div");
+  c.style.position = "fixed";
+  c.style.width = "10px";
+  c.style.height = "10px";
+  c.style.borderRadius = "50%";
+  c.style.background = `hsl(${Math.random()*360},100%,60%)`;
+  c.style.left = Math.random()*window.innerWidth + "px";
+  c.style.top = "-10px";
+  c.style.zIndex = 9999;
+  document.body.appendChild(c);
+
+  let fall = setInterval(()=>{
+    c.style.top = c.offsetTop + 4 + "px";
+    c.style.left = c.offsetLeft + Math.sin(c.offsetTop/20)*2 + "px";
+
+    if(c.offsetTop > window.innerHeight){
+      clearInterval(fall);
+      c.remove();
+    }
+  },16);
+}
+
+/* FLOATING TEXT */
+function floatingText(){
+  const words = ["COOL","ANDREW","LEGEND","MAX","ASCEND","GODMODE"];
+
+  let t = document.createElement("div");
+  t.innerText = words[Math.floor(Math.random()*words.length)];
+  t.style.position = "fixed";
+  t.style.left = Math.random()*window.innerWidth + "px";
+  t.style.top = window.innerHeight + "px";
+  t.style.fontSize = "20px";
+  t.style.color = `hsl(${Math.random()*360},100%,60%)`;
+  t.style.zIndex = 9999;
+  document.body.appendChild(t);
+
+  let rise = setInterval(()=>{
+    t.style.top = t.offsetTop - 3 + "px";
+    if(t.offsetTop < -50){
+      clearInterval(rise);
+      t.remove();
+    }
+  },16);
+}
+
+/* BIRDS */
+function flyingBird(){
+  const b = document.createElement("div");
+  b.innerText = ["🕊️","🦅","✨","☄️"][Math.floor(Math.random()*4)];
+  b.style.position = "fixed";
+  b.style.left = "-50px";
+  b.style.top = Math.random()*window.innerHeight + "px";
+  b.style.fontSize = "24px";
+  b.style.zIndex = 9999;
+  document.body.appendChild(b);
+
+  let fly = setInterval(()=>{
+    b.style.left = b.offsetLeft + 6 + "px";
+    if(b.offsetLeft > window.innerWidth + 50){
+      clearInterval(fly);
+      b.remove();
+    }
+  },16);
+}
+
+/* GALAXY */
+function galaxyBurst(){
+  document.body.style.background =
+    "radial-gradient(circle,#ff00ff,#000,#00ffcc,#000)";
+
+  setTimeout(()=>{
+    document.body.style.background = "black";
+  },8000);
+}
+
+/* SHAKE */
+function screenShake(){
+  let i = 0;
+  let shake = setInterval(()=>{
+    document.body.style.transform =
+      `translate(${Math.random()*10-5}px,${Math.random()*10-5}px)`;
+
+    i++;
+    if(i > 80){
+      clearInterval(shake);
+      document.body.style.transform = "none";
+    }
+  },20);
+}
+
+/* STARFIELD */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = Array.from({length:250},()=>({
+  x: Math.random()*canvas.width,
+  y: Math.random()*canvas.height,
+  s: Math.random()*2
+}));
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let s of stars){
+    ctx.fillStyle = "white";
+    ctx.fillRect(s.x,s.y,s.s,s.s);
+    s.y += s.s * 0.6;
+    if(s.y > canvas.height){
+      s.y = 0;
+      s.x = Math.random()*canvas.width;
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* PASSIVE GROWTH */
+setInterval(()=>{
+  if(score < MAX){
+    score++;
+    update();
+  }
+},1200);
+
+log("SYSTEM ONLINE // ULTRA FINAL ENGINE READY");
+</script>
+
+</body>
+</html>
